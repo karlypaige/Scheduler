@@ -111,6 +111,12 @@ $(".time").css({"color":"white","font-weight":"bold","padding":"10px","border-ra
 $(".col-10").css({"padding":"7px"});
 $("button").css({"padding":"7px"});
 
+//look for local storage and populate areas if present in opbject
+if(localStorage.getItem("schedule")){
+    console.log("calling fromStorage");
+    fromStorage();
+}
+
 //button click event
 $(".btn").on("click", function(event){
     
@@ -131,10 +137,7 @@ $(".btn").on("click", function(event){
 //store items
 function toStorage(item, j){
     //check for exisitng local storage
-console.log("Begin to Storage -------------------------------------------");
-
-    // console.log(item["value"] + " " + j)
-    // console.log(localStorage.getItem("schedule"));
+    console.log("Begin to Storage -------------------------------------------");
 
     //if there is something in local storage
     if(localStorage.getItem("schedule")){
@@ -169,6 +172,12 @@ console.log("Begin to Storage -------------------------------------------");
 
 //retrieve items
 function fromStorage(){
+    console.log("Begin fromStorage -------------------------------------------");
     myObj = JSON.parse(localStorage.getItem("schedule"));
-    //console.log(myObj);
+    console.log(myObj);
+
+    for(var i=0; i<myObj.length; i++){
+        $("#textArea" + i).text(myObj[i].value)
+        
+    }
 };
