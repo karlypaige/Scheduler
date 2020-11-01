@@ -113,7 +113,6 @@ $("button").css({"padding":"7px"});
 
 //look for local storage and populate areas if present in opbject
 if(localStorage.getItem("schedule")){
-    console.log("calling fromStorage");
     fromStorage();
 }
 
@@ -137,8 +136,6 @@ $(".btn").on("click", function(event){
 //store items
 function toStorage(item, j){
     //check for exisitng local storage
-    console.log("Begin to Storage -------------------------------------------");
-
     //if there is something in local storage
     if(localStorage.getItem("schedule")){
         var flag = false;
@@ -149,7 +146,6 @@ function toStorage(item, j){
         for (var i=0; i<myObj.length; i++){
             //check for matched indexes
             if(j === myObj[i]["ind"]){
-                console.log("In the replace value loop")
                 //replace value if found
                 myObj[i]["value"] = item["value"];
                 flag = true;
@@ -158,26 +154,20 @@ function toStorage(item, j){
         }; 
         if (flag === false){
             //append new value to end of object
-            console.log("no values to replace, push to end of object")
             myObj.push(item);
         };            
     }else{
         //if the storage is empty then populate it
-        console.log("local storage was empty so intialize the object")
         myObj.push(item);
     };
-    console.log("send the modified object to storeage")
     localStorage.setItem("schedule", JSON.stringify(myObj));
 };
 
 //retrieve items
 function fromStorage(){
-    console.log("Begin fromStorage -------------------------------------------");
     myObj = JSON.parse(localStorage.getItem("schedule"));
-    console.log(myObj);
 
     for(var i=0; i<myObj.length; i++){
-        $("#textArea" + i).text(myObj[i].value)
-        
+        $("#textArea" + myObj[i].ind).text(myObj[i].value)   
     }
 };
